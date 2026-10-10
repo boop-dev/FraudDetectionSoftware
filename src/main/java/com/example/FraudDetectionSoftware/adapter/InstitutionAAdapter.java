@@ -38,6 +38,17 @@ public class InstitutionAAdapter implements InstitutionAdapter {
         };
         transaction.setTransactionType(type);
 
+        String rawStatus = values.get("status").trim().toUpperCase();
+        Transaction.TransactionStatus status = switch (rawStatus) {
+            case "PENDING" -> Transaction.TransactionStatus.PENDING;
+            case "FAILED" -> Transaction.TransactionStatus.FAILED;
+            case "COMPLETED" -> Transaction.TransactionStatus.COMPLETED;
+            case "CANCELLED" -> Transaction.TransactionStatus.CANCELLED;
+            default -> throw new IllegalArgumentException("Unknown transaction type from Institution A: " + rawStatus);
+        };
+        transaction.setStatus(status);
+
+
         transaction.setTimestamp(LocalDateTime.parse(values.get("timestamp")));
 
         Account sourceAccount = new Account();
