@@ -8,7 +8,7 @@ public interface InstitutionAdapter {
 
     Transaction normalize(RawTransactionRecord raw);
 
-    Institution.InstitutionType getInstitution(RawTransactionRecord raw);
+    Institution.InstitutionType getInstitution();
 }
 
 

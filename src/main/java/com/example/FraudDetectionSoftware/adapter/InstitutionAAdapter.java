@@ -5,6 +5,7 @@ import com.example.FraudDetectionSoftware.model.Institution;
 import com.example.FraudDetectionSoftware.model.Transaction;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
 
@@ -23,6 +24,22 @@ public class InstitutionAAdapter implements InstitutionAdapter {
 
         transaction.setCurrency(values.get("currency"));
 
+        Institution institution = new Institution();
+        institution.setInstitutionCode(raw.getInstitution());
+        transaction.setInstitution(institution);
+
+        String rawType = values.get("type").trim().toUpperCase();
+        Transaction.TransactionType type = switch (rawType) {
+            case "TRANSFER", "WIRE" -> Transaction.TransactionType.TRANSFER;
+            case "DEPOSIT" -> Transaction.TransactionType.DEPOSIT;
+            case "WITHDRAWAL" -> Transaction.TransactionType.WITHDRAWAL;
+            case "PAYMENT" -> Transaction.TransactionType.PAYMENT;
+            default -> throw new IllegalArgumentException("Unknown transaction type from Institution A: " + rawType);
+        };
+        transaction.setTransactionType(type);
+
+        transaction.setTimestamp(LocalDateTime.parse(values.get("timestamp")));
+
         Account sourceAccount = new Account();
         UUID sourceAccountID = UUID.fromString(values.get("account_id"));
         sourceAccount.setId(sourceAccountID);
@@ -35,7 +52,7 @@ public class InstitutionAAdapter implements InstitutionAdapter {
     }
 
     @Override
-    public Institution.InstitutionType getInstitution(RawTransactionRecord raw) {
-       return raw.getInstitution().getType();
+    public Institution.InstitutionType getInstitution() {
+       return Institution.InstitutionType.BANK;
     }
 }
