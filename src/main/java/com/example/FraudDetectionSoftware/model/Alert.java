@@ -29,7 +29,7 @@ public class Alert {
     private Account entityId;
 
     @NotNull
-    @Column
+    @Column(name = "rule_triggered")
     private String ruleTriggered;
 
     @NotNull

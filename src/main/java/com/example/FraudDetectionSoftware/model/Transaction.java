@@ -62,7 +62,7 @@ public class Transaction {
     private TransactionType transactionType;
 
     @NotNull
-    @Column(name = "timestamp", nullable = false)
+    @Column(name = "time_stamp", nullable = false)
     private LocalDateTime timestamp;
 
     @Column(name = "counterparty_institution", length = 255)

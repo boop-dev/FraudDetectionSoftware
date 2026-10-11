@@ -44,7 +44,7 @@ public class InstitutionAAdapter implements InstitutionAdapter {
             case "FAILED" -> Transaction.TransactionStatus.FAILED;
             case "COMPLETED" -> Transaction.TransactionStatus.COMPLETED;
             case "CANCELLED" -> Transaction.TransactionStatus.CANCELLED;
-            default -> throw new IllegalArgumentException("Unknown transaction type from Institution A: " + rawStatus);
+            default -> throw new IllegalArgumentException("Unknown transaction status from Institution A: " + rawStatus);
         };
         transaction.setStatus(status);
 
